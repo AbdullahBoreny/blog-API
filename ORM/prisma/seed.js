@@ -1,8 +1,8 @@
-import { prisma } from './ORM/lib/prisma.js';
+import { prisma } from '../lib/prisma.js';
 
 async function main() {
 
-    const person = await prisma.person.findMany();
+    const person = await prisma.session.findMany();
     console.log(person);
 
 }
