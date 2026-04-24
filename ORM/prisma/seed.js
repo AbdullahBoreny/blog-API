@@ -8,13 +8,50 @@ async function main() {
 
             email: "ariana@prisma.io",
             name: "Ari",
-            password: "120"
+            password: "120",
+            posts: [
+                {
+                    title: "TODAYS  A",
+                    content: "lorem ipsums data shit",
+                    comments: [
+                        {
+                            content: "wtf is this",
+                        }
+                    ]
+                }
+
+            ],
+            comments: [
+                {
+                    content: "comment for post from ari",
+                }
+            ]
+
+
 
         },
         {
             email: "elsa@prisma.io",
             name: "Elsa",
-            password: "123"
+            password: "3333",
+            posts: [
+                {
+                    title: "hello from elsa  A",
+                    content: "lorem elsa data shit",
+                    comments: [
+                        {
+                            content: " is this real",
+                        }
+                    ]
+                }
+
+            ],
+            // comments: [
+            //     {
+            //         content: "comment for post from elsa",
+            //     }
+            // ]
+
 
         },
     ];
@@ -25,19 +62,26 @@ async function main() {
                     password: user.password,
                     email: user.email,
                     name: user.name,
-                    posts: {
-                        create: {
-                            title: "abd",
-                            content: "zengi",
+                    posts: user.posts ? {
+                        create: user.posts.map(post => ({
+                            title: post.title,
+                            content: post.content,
+                            comments: post.comments ? {
+                                create: post.comments.map(comment => ({
+                                    content: comment.content,
+                                    author: { connect: { email: user.email } },
 
-                        }
-                    },
-                    comments: {
-                        create: {
-                            content: "hello",
+                                }))
+                            } : undefined
+                        })
+                        )
+                    } : undefined,
+                    // comments: user.comments ? {
+                    //     create: user.comments.map(comment => ({
+                    //         content: comment.content
+                    //     }))
+                    // } : undefined
 
-                        }
-                    }
 
                 },
                 include: {
