@@ -2,7 +2,7 @@ import { Router } from "express";
 import * as authController from '../controllers/authController.js';
 const authRouter = Router();
 authRouter.route('/sign-up')
-    .post(authController.createUserPost);
+    .post(authController.createAccount);
 
 authRouter.post('/log-in', authController.createUserLogin);
 

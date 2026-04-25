@@ -1,4 +1,4 @@
-import initPassport from "../service/pass.cjs";
+import initPassport from "../service/passport.cjs";
 import { matchedData, validationResult } from "express-validator";
 import { validateUser } from "../service/userValidation.js";
 import bcrypt from "bcryptjs";
@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import { prisma } from "../ORM/lib/prisma.js";
 initPassport();
 
-export const createUserPost = [
+export const createAccount = [
     validateUser,
 
     async (req, res) => {

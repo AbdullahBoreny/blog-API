@@ -8,8 +8,10 @@ export const getUserById = async (req, res) => {
 
 
     try {
-        const user = await prisma.account.findFirst({
-            where: { userId: Number(id) }
+        const user = await prisma.user.findFirst({
+            where: { id: Number(id) },
+
+            include: { posts: true  },
         });
         res.json(user);
     } catch (error) {
