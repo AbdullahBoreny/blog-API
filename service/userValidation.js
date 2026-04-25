@@ -7,11 +7,7 @@ const validateUser = [
         .trim()
         .notEmpty().withMessage("Name is required")
         .isLength({ min: 3, max: 30 }).withMessage("Name must be between 3 and 30 characters")
-        .custom(async (value) => {
-            const user = await prisma.user.findUnique({ where: { name: value } });
-            if (user) throw new Error("Username already taken");
-            return true;
-        }),
+    ,
 
     body("email")
         .trim()
@@ -19,9 +15,9 @@ const validateUser = [
         .isEmail().withMessage("Please provide a valid email address")
         .normalizeEmail()
         .custom(async (value) => {
-            const user = await prisma.user.findUnique({ where: { email: value } });
+            const account = await prisma.account.findUnique({ where: { email: value } });
             // FIXED: If user exists, throw error. If not, proceed.
-            if (user) throw new Error("Email already in use");
+            if (account) throw new Error("Email already in use");
             return true;
         }),
 
@@ -40,7 +36,6 @@ const validateUser = [
             if (value !== req.body.password) {
                 throw new Error("Passwords do not match");
             }
-            console.log("im here?");
             return true;
         })
 ];

@@ -3,14 +3,14 @@ import { prisma } from "../ORM/lib/prisma.js";
 import { validateUser } from "../service/userValidation.js";
 import bcrypt from "bcryptjs";
 export const createUserPost = [
-    // validateUser,
+    validateUser,
 
     async (req, res) => {
-        // const errors = validationResult(req);
-        // if (!errors.isEmpty()) {
-        //     return res.status(403).json(errors.array());
-        // }
-        let { email, password, name } = req.body;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(403).json(errors.array());
+        }
+        let { email, password, name } = matchedData(req);
         password = await bcrypt.hash(password, 10);
         const account = await prisma.account.create({
             data: {
