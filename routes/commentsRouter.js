@@ -1,7 +1,12 @@
 import { Router } from "express";
+import { prisma } from "../ORM/lib/prisma.js";
 const commentsRouter = Router();
 commentsRouter.get('/', async (req, res) => {
-    res.status(301).json({ user: "name" });
+    const comments = await prisma.comment.findMany({
+        include: { author: true, post: true},
+        distinct: "id"
+    });
+    res.json(comments);
 });
 
 

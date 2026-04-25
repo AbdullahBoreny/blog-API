@@ -1,15 +1,6 @@
 import { Router } from "express";
-import { prisma } from "../ORM/lib/prisma.js";
+import * as userController from '../controllers/userController.js';
 const usersRouter = Router();
-usersRouter.get('/:userId', async (req, res) => {
-    const { userId } = req.params;
-    const user = await prisma.user.findFirst({
-        where: { id: Number(userId) },
-        include: { accounts: true }
-    });
-    res.json(user);
-});
-
-
-
+usersRouter.post('/sign-up', userController.createUserPost);
+usersRouter.get('/:userId', userController.getUserById);
 export default usersRouter;
