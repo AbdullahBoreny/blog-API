@@ -14,7 +14,7 @@ app.use(express.static(path.join(import.meta.dirname, "public")));
 
 
 app.use(express.urlencoded({ extended: false }));
-app.use('/api/authentication', routes.authRouter);
+app.use('/api/', routes.authRouter);
 app.use('/api/users', passport.authenticate('jwt', { session: false }), routes.usersRouter);
 app.use('/api/comments', routes.commentsRouter);
 app.use('/api/posts', routes.postsRouter);

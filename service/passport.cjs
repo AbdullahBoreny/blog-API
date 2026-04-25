@@ -1,5 +1,5 @@
 const { prisma } = require('../ORM/lib/prisma');
-
+const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const passportJWT = require("passport-jwt");
@@ -12,12 +12,17 @@ function initPassport() {
         usernameField: 'email',
         passwordField: 'password'
     },
-        function (email, password, cb) {
+        async function (email, password, cb) {
 
 
             return prisma.account.findFirst({ where: { email: email } })
-                .then(user => {
+                .then(async user => {
                     if (!user) {
+                        return cb(null, false, { message: 'Incorrect email or password.' });
+                    }
+                    const match = await bcrypt.compare(password, user.password);
+
+                    if (!match) {
                         return cb(null, false, { message: 'Incorrect email or password.' });
                     }
                     return cb(null, user, { message: 'Logged In Successfully' });
