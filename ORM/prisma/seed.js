@@ -1,107 +1,92 @@
-import { prisma } from '../lib/prisma.js';
-
-
-
+import { prisma } from "../lib/prisma.js";
+import { hash } from "bcryptjs";
 async function main() {
-    const users = [
-        {
+  console.log("Emptying database...");
+  // Clear existing data to prevent unique constraint errors on re-run
+  await prisma.session.deleteMany();
+  await prisma.account.deleteMany();
+  await prisma.comment.deleteMany();
+  await prisma.post.deleteMany();
+  await prisma.user.deleteMany();
+  
 
-            email: "ariana@prisma.io",
-            name: "Ari",
-            password: "120",
-            posts: [
-                {
-                    title: "TODAYS  A",
-                    content: "lorem ipsums data shit",
-                    comments: [
-                        {
-                            content: "wtf is this",
-                        }
-                    ]
-                }
+  console.log("Seeding data...");
 
-            ],
-            comments: [
-                {
-                    content: "comment for post from ari",
-                }
-            ]
-
-
-
+  // 1. Create a User with an Account
+  const hashedPassword = await hash("password123", 10);
+  
+  const alice = await prisma.user.create({
+    data: {
+      name: "Alice Smith",
+      accounts: {
+        create: {
+          email: "alice@example.com",
+          password: hashedPassword,
         },
-        {
-            email: "elsa@prisma.io",
-            name: "Elsa",
-            password: "3333",
-            posts: [
-                {
-                    title: "hello from elsa  A",
-                    content: "lorem elsa data shit",
-                    comments: [
-                        {
-                            content: " is this real",
-                        }
-                    ]
-                }
+      },
+      posts: {
+        create: [
+          {
+            title: "My First Prisma Post",
+            content: "Prisma makes database management a breeze!",
+            published: true,
+          },
+          {
+            title: "Scaling Postgres",
+            content: "Let's talk about indices and optimization.",
+            published: true,
+          },
+        ],
+      },
+    },
+  });
 
-            ],
-            // comments: [
-            //     {
-            //         content: "comment for post from elsa",
-            //     }
-            // ]
-
-
+  const bob = await prisma.user.create({
+    data: {
+      name: "Bob Jones",
+      accounts: {
+        create: {
+          email: "bob@example.com",
+          password: hashedPassword,
         },
-    ];
-    await Promise.all(
-        users.map(async (user) => {
-            await prisma.user.create({
-                data: {
-                    password: user.password,
-                    email: user.email,
-                    name: user.name,
-                    posts: user.posts ? {
-                        create: user.posts.map(post => ({
-                            title: post.title,
-                            content: post.content,
-                            comments: post.comments ? {
-                                create: post.comments.map(comment => ({
-                                    content: comment.content,
-                                    author: { connect: { email: user.email } },
+      },
+    },
+  });
 
-                                }))
-                            } : undefined
-                        })
-                        )
-                    } : undefined,
-                    // comments: user.comments ? {
-                    //     create: user.comments.map(comment => ({
-                    //         content: comment.content
-                    //     }))
-                    // } : undefined
+  // 2. Fetch one of Alice's posts to add comments to
+  const alicePost = await prisma.post.findFirst({
+    where: { authorId: alice.id },
+  });
 
-
-                },
-                include: {
-                    posts: true,
-                    comments: true
-                }
-
-            });
-
-        }),
-
-    );
-    console.log(users);
-}
-main()
-    .then(async () => {
-        await prisma.$disconnect();
-    })
-    .catch(async (e) => {
-        console.error(e);
-        await prisma.$disconnect();
-        process.exit(1);
+  if (alicePost) {
+    // 3. Create a Top-Level Comment
+    const parentComment = await prisma.comment.create({
+      data: {
+        content: "Great post, Alice!",
+        authorId: bob.id,
+        postId: alicePost.id,
+      },
     });
+
+    // 4. Create a Nested Reply (Thread)
+    await prisma.comment.create({
+      data: {
+        content: "Thanks Bob! Glad you liked it.",
+        authorId: alice.id,
+        postId: alicePost.id,
+        parentId: parentComment.id, // Linking the reply
+      },
+    });
+  }
+
+  console.log("Seeding finished successfully!");
+}
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
