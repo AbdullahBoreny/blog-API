@@ -17,9 +17,7 @@ function initPassport() {
 
             return prisma.account.findFirst({ where: { email: email } })
                 .then(user => {
-                    console.log(user);
                     if (!user) {
-                        console.log('shouldnt be here');
                         return cb(null, false, { message: 'Incorrect email or password.' });
                     }
                     return cb(null, user, { message: 'Logged In Successfully' });
@@ -29,7 +27,7 @@ function initPassport() {
     ));
     passport.use(new JWTStrategy({
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-        secretOrKey: 'your_jwt_secret'
+        secretOrKey: process.env.secret
     },
         function (jwtPayload, cb) {
             console.log(jwtPayload);
