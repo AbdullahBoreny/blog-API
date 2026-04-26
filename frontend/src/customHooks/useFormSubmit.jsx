@@ -23,18 +23,14 @@ export default function useFormSubmit() {
                 body: JSON.stringify({ email, password }),
             });
             const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.message);
-            } else {
-                console.log(data);
-                setSuccess(data.message);
-                localStorage.setItem('token', (data.token));
-
+            if (res.status >= 400) {
+                throw new Error(data.info.message);
             }
+            setSuccess(data.message);
+            localStorage.setItem('token', (data.token));
 
-
-        } catch (err) {
+        }
+        catch (err) {
             console.error(err.message);
             setError(err.message);
         } finally {

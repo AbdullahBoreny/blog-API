@@ -1,7 +1,6 @@
-import Form from "./Form";
+import Form from "./Login";
 import Posts from "./Posts";
 import Accounts from "./Accounts";
-import Image from "./Image";
 export default function App() {
   return (
     <>
