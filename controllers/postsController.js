@@ -48,7 +48,7 @@ export const postDetailGet = async (req, res) => {
             where: { id: Number(postId) },
             include: { author: true }
         });
-        res.json(post);
+        return post ? res.json(post) : res.json({ message: `post ${postId} doesn't exists` });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Server error" });
@@ -80,8 +80,13 @@ export const postUpdatePut = async (req, res) => {
     }
 };
 export const postDeleteDelete = async (req, res) => {
-    try {
+    const { postId } = req.params;
 
+    try {
+        const post = await prisma.post.delete({
+            where: { authorId: req.user.authorId, id: Number(postId) }
+        });
+        res.json({ deletedPost: post, message: "deleted successfully " });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "couldn't delete post error" });
