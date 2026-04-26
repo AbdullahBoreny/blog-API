@@ -1,20 +1,11 @@
 import { useState, useEffect } from "react";
+import usePostsData from "../customHooks/usePostsData";
 
 export default function Posts() {
-    const [posts, setPosts] = useState([]);
-
-    useEffect(() => {
-
-        const fetchPosts = async () => {
-            const result = await fetch('http://localhost:3000/api/posts');
-            const data = await result.json();
-            setPosts(data);
-        };
-        fetchPosts();
-
-    }, []);
+    const { posts, error, loading } = usePostsData();
+    if (error) return <p>{error}</p>;
+    if (loading) return <p>loading...</p>;
     return (
-
         <>
             <div className="titles">
                 {posts.map(post => <h1 key={post.id}>{post.title}</h1>)}

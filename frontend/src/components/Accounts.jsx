@@ -1,0 +1,13 @@
+import { useState, useEffect } from "react";
+import useUserAccounts from "../customHooks/useUserAccounts";
+
+export default function Accounts() {
+    const { accounts } = useUserAccounts();
+    return (
+        <>
+            <div className="accounts">
+                {accounts.map(account => <h1 key={account.id}>{account.email}</h1>)}
+            </div>
+        </>
+    );
+};
