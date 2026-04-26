@@ -48,7 +48,7 @@ export const createUserLogin = (req, res, next) => {
             if (err) {
                 res.json(err);
             }
-            console.log(account);
+          
             const token = jwt.sign({ accountId: account.id }, process.env.secret, { expiresIn: '1h' });
 
             return res.json({ token, message: info });
