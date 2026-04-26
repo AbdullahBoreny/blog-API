@@ -1,8 +1,10 @@
-
-import buttonStyles from '../styles/Button.module.css';
-
-export default function Button() {
+import Form from "./Form";
+import Posts from "./Posts";
+export default function App() {
   return (
-    <button className={buttonStyles.btn}>Submit</button>
+    <>
+      <Form />
+      <Posts />
+    </>
   );
 }
