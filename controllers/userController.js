@@ -4,7 +4,7 @@ import { prisma } from "../ORM/lib/prisma.js";
 
 
 export const getUserAccounts = async (req, res) => {
-    // const { id } = req.params;
+  
 
     try {
 

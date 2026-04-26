@@ -16,7 +16,7 @@ const validateUser = [
         .normalizeEmail()
         .custom(async (value) => {
             const account = await prisma.account.findUnique({ where: { email: value } });
-            // FIXED: If user exists, throw error. If not, proceed.
+           
             if (account) throw new Error("Email already in use");
             return true;
         }),

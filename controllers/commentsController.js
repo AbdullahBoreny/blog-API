@@ -1,6 +1,6 @@
 import { prisma } from "../ORM/lib/prisma.js";
 
-export const postCommentsGet = async (req, res) => {
+export const getComments = async (req, res) => {
     const { postId } = req.params;
     try {
         const comments = await prisma.comment.findMany({
