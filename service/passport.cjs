@@ -36,7 +36,7 @@ function initPassport() {
     },
         function (jwtPayload, cb) {
             console.log(jwtPayload);
-            return prisma.user.findFirst({ where: { id: jwtPayload.id } })
+            return prisma.user.findUnique({ where: { id: jwtPayload.id } })
                 .then(user => {
                     return cb(null, user);
                 })

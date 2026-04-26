@@ -1,14 +1,7 @@
 import { Router } from "express";
-import { prisma } from "../ORM/lib/prisma.js";
+import * as commentsController from '../controllers/commentsController.js';
 const commentsRouter = Router();
-commentsRouter.get('/', async (req, res) => {
-    const comments = await prisma.comment.findMany({
-        include: { author: true, post: true},
-        distinct: "id"
-    });
-    res.json(comments);
-});
-
+commentsRouter.get('/:postId', commentsController.postCommentsGet);
 
 
 export default commentsRouter;

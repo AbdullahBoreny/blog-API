@@ -4,5 +4,5 @@ import * as userController from '../controllers/userController.js';
 const usersRouter = Router();
 
 
-usersRouter.get('/:id', userController.getUserById);
+usersRouter.get('/accounts', userController.getUserAccounts);
 export default usersRouter;
