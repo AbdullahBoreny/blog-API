@@ -10,6 +10,7 @@ export const postCommentsGet = async (req, res) => {
                 parentId: null
             },
             include: {
+
                 author: { select: { name: true } },
                 replies: {
                     include: { author: { select: { name: true } } }
@@ -24,14 +25,16 @@ export const postCommentsGet = async (req, res) => {
     }
 };
 export const postCreatePost = async (req, res) => {
+
     const { title, content, published } = req.body;
+
 
     try {
         const newPost = await prisma.post.create({
             data: {
                 title,
                 content,
-                published: published || false,
+                published,
                 authorId: req.user.userId // ID from JWT payload
             }
         });
@@ -67,11 +70,12 @@ export const postsGet = async (req, res) => {
 
 export const postUpdatePut = async (req, res) => {
     const { postId } = req.params;
-    console.log(req.user);
+    const { title, content, published } = req.body;
+
     try {
         const post = await prisma.post.update({
             where: { authorId: req.user.userId, id: Number(postId) },
-            data: { content: req.body.content, title: req.body.title }
+            data: { content: content, title: title, published: published }
         });
         res.json({ updatedPost: post, message: 'post updated successfully' });
     } catch (error) {
