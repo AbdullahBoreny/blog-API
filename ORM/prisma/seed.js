@@ -13,7 +13,6 @@ async function main() {
   console.log("Seeding data...");
 
   // 1. Create a User with an Account
-  const hashedPassword = await hash("password123", 10);
   
   const alice = await prisma.user.create({
     data: {
@@ -21,7 +20,7 @@ async function main() {
       accounts: {
         create: {
           email: "alice@example.com",
-          password: hashedPassword,
+          password: "123",
         },
       },
       posts: {
@@ -47,7 +46,7 @@ async function main() {
       accounts: {
         create: {
           email: "bob@example.com",
-          password: hashedPassword,
+          password: "123",
         },
       },
     },

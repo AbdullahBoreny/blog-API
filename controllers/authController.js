@@ -35,21 +35,21 @@ export const createAccount = [
 ];
 
 export const createUserLogin = (req, res, next) => {
-    passport.authenticate('local', { session: false }, (error, user, info) => {
+    passport.authenticate('local', { session: false }, (error, account, info) => {
 
-        if (error || !user) {
+        if (error || !account) {
 
             return res.status(400).json({
                 message: info
 
             });
         }
-        req.login(user, { session: false }, (err) => {
+        req.login(account, { session: false }, (err) => {
             if (err) {
                 res.json(err);
             }
-            console.log(user.id);
-            const token = jwt.sign({ id: user.id }, process.env.secret, { expiresIn: '1h' });
+            console.log(account);
+            const token = jwt.sign({ accountId: account.id }, process.env.secret, { expiresIn: '1h' });
 
             return res.json({ token, message: info });
         });

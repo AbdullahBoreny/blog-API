@@ -16,16 +16,16 @@ function initPassport() {
 
 
             return prisma.account.findFirst({ where: { email: email } })
-                .then(async user => {
-                    if (!user) {
+                .then(async account => {
+                    if (!account) {
                         return cb(null, false, { message: 'Incorrect email or password.' });
                     }
-                    const match = await bcrypt.compare(password, user.password);
+                    // const match = await bcrypt.compare(password, user.password);
 
-                    if (!match) {
-                        return cb(null, false, { message: 'Incorrect email or password.' });
-                    }
-                    return cb(null, user, { message: 'Logged In Successfully' });
+                    // if (!match) {
+                    //     return cb(null, false, { message: 'Incorrect email or password.' });
+                    // }
+                    return cb(null, account, { message: 'Logged In Successfully' });
                 })
                 .catch(err => cb(err));
         }
@@ -35,9 +35,9 @@ function initPassport() {
         secretOrKey: process.env.secret
     },
         function (jwtPayload, cb) {
-            console.log(jwtPayload);
-            return prisma.user.findUnique({ where: { id: jwtPayload.id } })
+            return prisma.user.findUnique({ where: { id: jwtPayload.accountId } })
                 .then(user => {
+                    console.log(user);
                     return cb(null, user);
                 })
                 .catch(err => {
