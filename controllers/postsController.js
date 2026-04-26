@@ -32,7 +32,7 @@ export const postCreatePost = async (req, res) => {
                 title,
                 content,
                 published: published || false,
-                authorId: req.user.id // ID from JWT payload
+                authorId: req.user.userId // ID from JWT payload
             }
         });
         res.status(201).json(newPost);
@@ -67,11 +67,13 @@ export const postsGet = async (req, res) => {
 
 export const postUpdatePut = async (req, res) => {
     const { postId } = req.params;
-
+    console.log(req.user);
     try {
-        await prisma.post.update({
-            where: { authorId: req.user.id, id: Number(postId) }
+        const post = await prisma.post.update({
+            where: { authorId: req.user.userId, id: Number(postId) },
+            data: { content: req.body.content, title: req.body.title }
         });
+        res.json({ updatedPost: post, message: 'post updated successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "could not update post error" });

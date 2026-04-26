@@ -4,13 +4,10 @@ import { prisma } from "../ORM/lib/prisma.js";
 
 
 export const getUserAccounts = async (req, res) => {
-  
-
     try {
 
-        const user = await prisma.account.findUnique({
-            where: { id: Number(req.user.id) },
-            omit: { userId: true, id: true }
+        const user = await prisma.account.findFirst({
+            where: { userId: Number(req.user.userId) },
         });
         res.json(user);
     } catch (error) {
