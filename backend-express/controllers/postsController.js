@@ -60,7 +60,10 @@ export const postDetailGet = async (req, res) => {
 
 export const postsGet = async (req, res) => {
     try {
-        const posts = await prisma.post.findMany({});
+        const posts = await prisma.post.findMany({
+            include: { comments: { include: { author: true } }, author: true },
+
+        });
         res.json(posts);
     } catch (error) {
         console.error(error);

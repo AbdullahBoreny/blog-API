@@ -9,11 +9,10 @@ export default function Login() {
     const { handleSubmit, loading, error, success } = useFormSubmit();
     const user = JSON.parse(localStorage.getItem('user'));
     const isLoggedIn = localStorage.getItem('isLogged');
-
     const navigate = useNavigate();
     const logout = () => {
         window.localStorage.removeItem('isLogged');
-        navigate('/log-in')
+        navigate('/log-in', { replace: true });
     };
     useEffect(() => {
         if (success) {
