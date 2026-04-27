@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import useUserAccounts from "../customHooks/useUserAccounts";
 
 export default function Accounts() {
-    const { accounts } = useUserAccounts();
+    const { accounts, loading, error } = useUserAccounts();
+    if (error) return <p>{error}</p>;
+    if (loading) return <p>loading...</p>;
+
     return (
         <>
             <div className="accounts">
