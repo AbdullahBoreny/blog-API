@@ -15,7 +15,10 @@ function initPassport() {
         async function (email, password, cb) {
 
 
-            return prisma.account.findFirst({ where: { email: email } })
+            return prisma.account.findFirst({
+                include: { user: true },
+                where: { email: email }
+            })
                 .then(async account => {
                     if (!account) {
                         return cb(null, false, { message: 'Incorrect email or password.' });

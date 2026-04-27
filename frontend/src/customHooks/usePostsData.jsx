@@ -9,9 +9,7 @@ export default function usePostsData() {
     useEffect(() => {
         fetch('http://localhost:3000/api/posts')
             .then(result => result.json())
-            .then(json =>  {setPosts(json)
-                console.log(json);
-            })
+            .then(json => setPosts(json))
             .catch(err => setError(err))
             .finally(() => setLoading(false));
 

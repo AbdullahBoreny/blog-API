@@ -5,7 +5,9 @@ export default function Posts() {
     if (error) return <p>{error.message}</p>;
     if (loading) return <p>loading...</p>;
     return (
+
         <>
+
             <div className={postStyle.postContainer}>
                 {posts.map(post => (
                     <div className={postStyle.post} key={post.id} >

@@ -40,7 +40,7 @@ export const createUserLogin = (req, res, next) => {
         if (error || !account) {
 
             return res.status(400).json({
-               info
+                info
 
             });
         }
@@ -48,10 +48,10 @@ export const createUserLogin = (req, res, next) => {
             if (err) {
                 res.json(err);
             }
-          
+
             const token = jwt.sign({ accountId: account.id }, process.env.secret, { expiresIn: '1h' });
 
-            return res.json({ token, message: info.message });
+            return res.json({ token, message: info.message, account });
         });
     })(req, res);
 };

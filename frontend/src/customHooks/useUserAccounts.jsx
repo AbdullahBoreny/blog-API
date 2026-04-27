@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export default function useUserAccounts() {
-    const [accounts, setAccounts] = useState([]);
+    const [accounts, setAccounts] = useState();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -23,6 +23,7 @@ export default function useUserAccounts() {
 
                     return Promise.reject(error);
                 }
+
                 setAccounts(data);
             }).catch(error => {
 

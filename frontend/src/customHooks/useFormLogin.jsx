@@ -3,6 +3,7 @@ export default function useFormSubmit() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem('token'));
 
 
     async function handleSubmit(e) {
@@ -25,14 +26,15 @@ export default function useFormSubmit() {
             const data = await res.json();
 
             if (!res.ok) {
-              
+
                 throw new Error(data.info.message);
             }
 
-
+            setToken(data.token);
             setSuccess(data.message);
-            localStorage.setItem('token', (data.token));
-
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('isLogged', true);
+            localStorage.setItem('user', JSON.stringify(data));
         }
         catch (err) {
 
@@ -42,5 +44,5 @@ export default function useFormSubmit() {
             setLoading(false);
         }
     }
-    return { handleSubmit, error, loading, success };
+    return { handleSubmit, error, loading, success, token };
 }
