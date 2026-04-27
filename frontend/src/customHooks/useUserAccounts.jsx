@@ -6,22 +6,31 @@ export default function useUserAccounts() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchAccounts = async () => {
-            const response = await fetch('http://localhost:3000/api/users/accounts', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (!response.ok) {
-                console.log(response.statusText);
-                setError(response.statusText);
-                throw new Error(response.statusText);
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
             }
-            const data = await response.json();
-            setAccounts(data);
         };
-        fetchAccounts();
+
+        fetch('http://localhost:3000/api/users/accounts', requestOptions)
+            .then(async response => {
+                const data = await response.json();
+                if (!response.ok) {
+
+                    const error = (data && data.message) || response.status;
+
+                    return Promise.reject(error);
+                }
+                setAccounts(data);
+            }).catch(error => {
+
+                setError(error);
+
+
+            })
+            .finally(() => setLoading(false));
 
     }, []);
     return { accounts, error, loading };

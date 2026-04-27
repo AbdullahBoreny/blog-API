@@ -25,14 +25,10 @@ export default function useFormSubmit() {
             const data = await res.json();
 
             if (!res.ok) {
-                console.log("?? what");
+              
                 throw new Error(data.info.message);
             }
 
-            if (!data.token) {
-                console.log(data.token);
-                throw new Error(data.info.message);
-            }
 
             setSuccess(data.message);
             localStorage.setItem('token', (data.token));

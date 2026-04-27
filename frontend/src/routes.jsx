@@ -1,5 +1,4 @@
 import Accounts from "./components/Accounts";
-import App from "./components/App";
 import Login from "./components/Login";
 import Posts from "./components/Posts";
 import Signup from "./components/Signup";

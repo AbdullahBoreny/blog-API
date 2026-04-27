@@ -6,7 +6,6 @@ import { useNavigate } from "react-router";
 import { UserPlus } from "lucide-react";
 export default function Login() {
     const { handleSubmit, loading, error, success } = useFormSubmit();
-    let navigate = useNavigate();
     return (
         <div className="wrapper signIn">
 
@@ -31,8 +30,7 @@ export default function Login() {
                 </p>
 
                 {error && <p style={{ color: "red" }}>{error}</p>}
-
-                {success && navigate('/posts', { replace: true })}
+                {success && <p style={{ color: 'green' }}>{success}</p>}
             </form>
         </div>
     );
