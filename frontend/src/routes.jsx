@@ -1,12 +1,12 @@
 import Accounts from "./components/Accounts";
+import App from "./components/App";
 import Login from "./components/Login";
-import Posts from "./components/Posts";
 import Signup from "./components/Signup";
 import ErrorPage from "./misc/ErrorPage";
 const routes = [
   {
     path: "/",
-    element: <Login />,
+    element: <App />,
     errorElement: <ErrorPage />
 
   },
@@ -15,8 +15,8 @@ const routes = [
     element: <Signup />,
   },
   {
-    path: '/posts',
-    element: <Posts />,
+    path: '/log-in',
+    element: <Login />,
     errorElement: <ErrorPage />
   },
   {

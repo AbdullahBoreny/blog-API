@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import useUserAccounts from "../customHooks/useUserAccounts";
 
 export default function Accounts() {

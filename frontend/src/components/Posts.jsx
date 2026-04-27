@@ -11,6 +11,7 @@ export default function Posts() {
                     <div className={postStyle.post} key={post.id} >
                         <h1>title: {post.title}</h1>
                         <h2>content: {post.content}</h2>
+                        <h3>created At: {new Date(post.createdAt).toLocaleDateString()}</h3>
                     </div>
 
                 )
