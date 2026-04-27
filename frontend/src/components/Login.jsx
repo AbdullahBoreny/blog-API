@@ -1,11 +1,12 @@
 import { useState } from "react";
 import useFormSubmit from "../customHooks/useFormSubmit";
 import '../styles/styles.css';
-import { Link } from "react-router";
+import { Link, Navigate } from "react-router";
 import { useNavigate } from "react-router";
 import { UserPlus } from "lucide-react";
 export default function Login() {
     const { handleSubmit, loading, error, success } = useFormSubmit();
+    const navigate = useNavigate();
     return (
         <div className="wrapper signIn">
 
@@ -21,8 +22,10 @@ export default function Login() {
                 </div>
 
                 <button
+                    onClick={success && navigate('/posts', { replace: true })}
                     type="submit" disabled={loading}>
                     {loading ? "Logging in..." : "Log In"}
+
                 </button>
                 <p style={{ display: 'flex' }}>
                     <Link to='/sign-up'>
