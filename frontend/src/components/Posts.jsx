@@ -10,12 +10,12 @@ export default function Posts() {
 
         <>
 
-            <div className={postStyle.postContainer}>
+            <section className={postStyle.postContainer}>
                 {posts.map(post => (
                     <div className={postStyle.post} key={post.id} >
 
-                        <h1 style={{ display: 'flex' }} className="author">
-                            <User />
+                        <h1 className="author">
+
                             <span>
                                 {post.author.name}
                             </span>
@@ -47,7 +47,7 @@ export default function Posts() {
                 <div className="comments">
 
                 </div>
-            </div>
+            </section>
 
 
 

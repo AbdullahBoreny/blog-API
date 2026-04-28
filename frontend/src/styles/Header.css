@@ -1,0 +1,23 @@
+.header {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    padding: 1rem;
+}
+
+.header>div,
+a {
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: white;
+    background-color: rgb(187, 78, 230);
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    transition: transform ease-in 0.2s;
+}
+
+.header > div:hover {
+opacity: 0.5;
+transform: scale(1.2);
+}
