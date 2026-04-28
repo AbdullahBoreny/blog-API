@@ -33,7 +33,7 @@ export default function Signup() {
                     </h2>
                 </form>
                 <p>
-                    Have an account ? <Link to="/log-in"> <LogIn />  </Link>
+                    <Link to="/log-in">  </Link>
                 </p>
             </div>
         </div>

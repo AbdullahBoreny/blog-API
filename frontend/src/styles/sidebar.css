@@ -1,0 +1,49 @@
+.sidebar-section {
+    display: flex;
+    flex-direction: column;
+
+    border-bottom: 1px solid #e5dcbd;
+    margin: 1.25rem;
+    padding-bottom: 1.5rem;
+    max-width: 500px;
+}
+
+:is(:is(.sidebar-section .sidebar-nav-links) a) img {
+    height: 20px;
+    width: 20px;
+}
+
+:is(.sidebar-section .sidebar-nav-links) a {
+    display: flex;
+    border-radius: 6px;
+    align-items: center;
+    color: rgb(33, 33, 33);
+    gap: .5rem;
+    margin-left: -.5rem;
+    margin-right: -.5rem;
+    padding: 4px .5rem;
+    font-size: 0.8rem;
+}
+
+.sidebar-section h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: .75rem;
+    margin-top: 0;
+}
+
+.sidebar-title-link {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-nav-links {
+    display: flex;
+    flex-direction: column;
+}

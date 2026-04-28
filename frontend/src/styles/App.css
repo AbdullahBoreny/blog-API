@@ -1,6 +1,17 @@
-.app-container {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
+ :root {
+     --sidebar-width: 260px;
+     --content-width: 760px;
+     --post-sidebar-width: 260px;
+     --primary-color: #99AD7A;
+     background-color: #F9B2D7;
+ }
 
-}
+ .app-container {
+
+     padding-top: 0;
+     display: grid;
+     grid-template-columns: 1fr 3fr;
+     margin: 0 auto;
+     max-width: calc(var(--content-width) + var(--sidebar-width) + var(--post-sidebar-width) + 6rem);
+     padding-top: 0;
+ }

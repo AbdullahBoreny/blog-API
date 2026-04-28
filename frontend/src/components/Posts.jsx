@@ -14,7 +14,7 @@ export default function Posts() {
                 {posts.map(post => (
                     <div className={postStyle.post} key={post.id} >
 
-                        <h1 className="author">
+                        <div className={postStyle.author}>
 
                             <span>
                                 {post.author.name}
@@ -22,16 +22,19 @@ export default function Posts() {
 
 
 
-                        </h1>
-                        <h1>{post.title}</h1>
-                        <h2>content: {post.content}</h2>
-                        <h3>created At: {new Date(post.createdAt).toLocaleDateString()}</h3>
-                        <div className="comments">
+                        </div>
+
+                        <div className={postStyle.title}>
+                            {post.title}
+                            <div className={postStyle.createdAt}>{new Date(post.createdAt).toLocaleDateString()}</div>
+                        </div>
+                        <div className={postStyle.content}>{post.content}</div>
+                        <div className={postStyle.comments}>
                             {post.comments.map(comment => (
 
-                                <div key={comment.id} className="comment">
-                                    <h2>@{comment.author.name}</h2>
-                                    <h1 >{comment.content}</h1>
+                                <div key={comment.id} className={postStyle.comment}>
+                                    <div>@{comment.author.name}</div>
+                                    <div >{comment.content}</div>
 
                                 </div>
 

@@ -1,10 +1,11 @@
 import Posts from "./Posts";
-import Header from "./Header";
 import '../styles/App.css'
+import Sidebar from "./Sidebar";
 export default function App() {
     return (
         <div className="app-container">
-            <Header />
+            {/* <Header /> */}
+            <Sidebar />
             <Posts />
 
 
