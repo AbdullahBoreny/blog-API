@@ -11,6 +11,7 @@ export default function Login() {
     const isLoggedIn = localStorage.getItem('isLogged');
     const navigate = useNavigate();
     const logout = () => {
+        window.localStorage.removeItem('token');
         window.localStorage.removeItem('isLogged');
         navigate('/log-in', { replace: true });
     };

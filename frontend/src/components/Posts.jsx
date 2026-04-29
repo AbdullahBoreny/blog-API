@@ -1,18 +1,29 @@
 import { AlignEndHorizontal, LoaderIcon, User } from "lucide-react";
 import usePostsData from "../customHooks/usePostsData";
 import postStyle from '../styles/Posts.module.css';
+import useHandleDeletePost from "../customHooks/useDeletePost";
 
 export default function Posts() {
-    const { posts, error, loading } = usePostsData();
-    // if (error) return <p>{error.message}</p>;
-    // if (loading) return <p>loading...<LoaderIcon /></p>;
+    const { setPosts, posts, error, loading } = usePostsData();
+    const { handleDelete, response } = useHandleDeletePost();
+    const isLoggedIn = localStorage.getItem('isLogged');
+
     return (
 
         <>
 
             <section className={postStyle.postContainer}>
+                {response && <p>{response.deletedPost.title} {response.message}</p>}
                 {posts.map(post => (
+
                     <div className={postStyle.post} key={post.id} >
+
+                        {isLoggedIn && <button onClick={() => {
+                            handleDelete(post.id);
+                            setPosts(posts.filter(p => p.id !== post.id));
+
+
+                        }}>delete</button>}
 
                         <div className={postStyle.author}>
                             <span>
@@ -43,7 +54,7 @@ export default function Posts() {
                 )}
                 {loading && <p>loading...<LoaderIcon /> </p>}
                 {error && <p>{error.message}</p>}
-            </section>
+            </section >
 
 
 

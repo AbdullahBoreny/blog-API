@@ -23,6 +23,11 @@ const routes = [
     path: '/accounts',
     element: <Accounts />,
     errorElement: <ErrorPage />
+  },
+  {
+    path: '/edit',
+    element: <Accounts />,
+    errorElement: <ErrorPage />
   }
 
 ];
