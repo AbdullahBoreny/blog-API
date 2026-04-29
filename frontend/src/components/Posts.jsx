@@ -24,7 +24,7 @@ export default function Posts() {
             <section className={postStyle.postContainer}>
                 {data && <p>{data.deletedPost.title} {data.message}</p>}
                 {posts.map(post => (
-
+                    post.published &&
                     <div className={postStyle.post} key={post.id} >
 
                         {isLoggedIn && <button onClick={() => onDelete(post.id)}>delete</button>}

@@ -49,8 +49,7 @@ export const postDetailGet = async (req, res) => {
     try {
         const post = await prisma.post.findUnique({
             where: { id: Number(postId) },
-            include: { author: true },
-            select: { published: true }
+            select: { author: true, published: true }
         });
         return post ? res.json(post) : res.json({ message: `post ${postId} doesn't exists` });
     } catch (error) {
@@ -74,6 +73,7 @@ export const postsGet = async (req, res) => {
 
 export const postUpdatePut = async (req, res) => {
     const { postId } = req.params;
+    console.log(req.body);
     const { title, content, published } = req.body;
 
     try {
