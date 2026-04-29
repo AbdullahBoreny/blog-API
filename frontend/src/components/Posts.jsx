@@ -4,14 +4,17 @@ import postStyle from '../styles/Posts.module.css';
 import useHandleDeletePost from "../customHooks/useDeletePost";
 
 export default function Posts() {
-    const { setPosts, posts, error, loading } = usePostsData();
-    const { handleDelete, response } = useHandleDeletePost();
+    const { setPosts, posts, loading } = usePostsData();
+    const { handleDelete, data, error } = useHandleDeletePost();
     const isLoggedIn = localStorage.getItem('isLogged');
     async function onDelete(id) {
         const success = await handleDelete(id);
-        console.log(success);
+
         if (success) {
             setPosts(prev => prev.filter(p => p.id !== id));
+        }
+        else {
+            alert("not authorized");
         }
     }
     return (
@@ -19,7 +22,7 @@ export default function Posts() {
         <>
 
             <section className={postStyle.postContainer}>
-                {response && <p>{response.deletedPost.title} {response.message}</p>}
+                {data && <p>{data.deletedPost.title} {data.message}</p>}
                 {posts.map(post => (
 
                     <div className={postStyle.post} key={post.id} >

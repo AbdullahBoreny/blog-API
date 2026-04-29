@@ -11,8 +11,9 @@ export default function Login() {
     const isLoggedIn = localStorage.getItem('isLogged');
     const navigate = useNavigate();
     const logout = () => {
-        window.localStorage.removeItem('token');
-        window.localStorage.removeItem('isLogged');
+        localStorage.removeItem('token');
+        localStorage.removeItem('isLogged');
+        localStorage.removeItem('user');
         navigate('/log-in', { replace: true });
     };
     useEffect(() => {
@@ -20,7 +21,7 @@ export default function Login() {
             navigate('/', { replace: true });
         }
 
-    }, [success]);
+    }, [success, error]);
     if (isLoggedIn) {
         return (
             <>

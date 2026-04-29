@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function useHandleDeletePost() {
-    const [response, setResponse] = useState(null);
+    const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -27,10 +27,11 @@ export default function useHandleDeletePost() {
                 throw new Error(data.message || "Failed to delete post");
             }
 
-            setResponse(data);
+            setData(data);
 
             return true;
         } catch (error) {
+            
             setError(error.message);
             return false;
         } finally {
@@ -40,7 +41,7 @@ export default function useHandleDeletePost() {
 
     return {
         handleDelete,
-        response,
+        data,
         error,
         loading,
     };

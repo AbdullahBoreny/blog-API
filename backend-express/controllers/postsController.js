@@ -49,7 +49,8 @@ export const postDetailGet = async (req, res) => {
     try {
         const post = await prisma.post.findUnique({
             where: { id: Number(postId) },
-            include: { author: true }
+            include: { author: true },
+            select: { published: true }
         });
         return post ? res.json(post) : res.json({ message: `post ${postId} doesn't exists` });
     } catch (error) {
