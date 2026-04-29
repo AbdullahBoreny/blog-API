@@ -3,7 +3,7 @@ import useUserAccounts from "../customHooks/useUserAccounts";
 export default function Accounts() {
     const { accounts, loading, error } = useUserAccounts();
     if (error) return <p>{error.message}</p>;
-    if (loading) return <p>loading...</p>;
+    if (loading) return <p>loading...  </p>;
 
     return (
         <>

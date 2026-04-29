@@ -26,7 +26,7 @@ export default function useUserAccounts() {
 
                 setAccounts(data);
             }).catch(error => {
-
+                console.log(error);
                 setError(error);
 
 

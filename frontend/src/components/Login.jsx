@@ -50,7 +50,7 @@ export default function Login() {
 
 
                 </button>
-                <p style={{ display: 'flex' }}>
+                <p >
                     <Link to='/sign-up'>
                         <UserPlus /></Link>
                 </p>

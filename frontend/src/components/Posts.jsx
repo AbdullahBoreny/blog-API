@@ -1,11 +1,11 @@
-import { AlignEndHorizontal, User } from "lucide-react";
+import { AlignEndHorizontal, LoaderIcon, User } from "lucide-react";
 import usePostsData from "../customHooks/usePostsData";
 import postStyle from '../styles/Posts.module.css';
 
 export default function Posts() {
     const { posts, error, loading } = usePostsData();
-    if (error) return <p>{error.message}</p>;
-    if (loading) return <p>loading...</p>;
+    // if (error) return <p>{error.message}</p>;
+    // if (loading) return <p>loading...<LoaderIcon /></p>;
     return (
 
         <>
@@ -15,13 +15,9 @@ export default function Posts() {
                     <div className={postStyle.post} key={post.id} >
 
                         <div className={postStyle.author}>
-
                             <span>
                                 {post.author.name}
                             </span>
-
-
-
                         </div>
 
                         <div className={postStyle.title}>
@@ -36,20 +32,17 @@ export default function Posts() {
                                     <div>@{comment.author.name}</div>
                                     <div >{comment.content}</div>
 
+
                                 </div>
 
                             ))}
                         </div>
                     </div>
-
-
                 )
 
-
                 )}
-                <div className="comments">
-
-                </div>
+                {loading && <p>loading...<LoaderIcon /> </p>}
+                {error && <p>{error.message}</p>}
             </section>
 
 
