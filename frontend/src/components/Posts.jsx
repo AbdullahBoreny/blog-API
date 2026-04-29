@@ -7,7 +7,13 @@ export default function Posts() {
     const { setPosts, posts, error, loading } = usePostsData();
     const { handleDelete, response } = useHandleDeletePost();
     const isLoggedIn = localStorage.getItem('isLogged');
-
+    async function onDelete(id) {
+        const success = await handleDelete(id);
+        console.log(success);
+        if (success) {
+            setPosts(prev => prev.filter(p => p.id !== id));
+        }
+    }
     return (
 
         <>
@@ -18,13 +24,7 @@ export default function Posts() {
 
                     <div className={postStyle.post} key={post.id} >
 
-                        {isLoggedIn && <button onClick={() => {
-                            handleDelete(post.id);
-                            setPosts(posts.filter(p => p.id !== post.id));
-
-
-                        }}>delete</button>}
-
+                        {isLoggedIn && <button onClick={() => onDelete(post.id)}>delete</button>}
                         <div className={postStyle.author}>
                             <span>
                                 {post.author.name}
@@ -52,7 +52,7 @@ export default function Posts() {
                 )
 
                 )}
-                {loading && <p>loading...<LoaderIcon /> </p>}
+                {loading && <p><LoaderIcon className={postStyle.spinner} /></p>}
                 {error && <p>{error.message}</p>}
             </section >
 
